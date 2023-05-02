@@ -80,14 +80,7 @@ void cleanup(HashTable *table) {
   }
 }
 
-int main() {
-  HashTable *table = create(hash, 100);
-
-  add(10, table);
-  add(20, table);
-  add(110, table);
-  add(120, table);
-
+void print_hash_table(HashTable *table) {
   for (int i = 0; i < table->total_capacity; i++) {
     printf("In index %d:\t", i);
     HashTableNode *curr = table->elements[i];
@@ -97,6 +90,17 @@ int main() {
     }
     printf("\n");
   }
+}
+
+int main() {
+  HashTable *table = create(hash, 100);
+
+  add(10, table);
+  add(20, table);
+  add(110, table);
+  add(120, table);
+
+  print_hash_table(table);
 
   cleanup(table);
 
