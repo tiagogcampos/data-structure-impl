@@ -93,8 +93,6 @@ int main() {
     insert(i, queue);
   }
 
-  print_queue(queue);
-
   for (int i = 0; i < 10; i++) {
     pop(queue);
   }
