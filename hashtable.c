@@ -1,6 +1,5 @@
-#include <stdlib.h>
 #include <stdio.h>
-
+#include <stdlib.h>
 
 struct HashTableNode;
 
@@ -8,7 +7,6 @@ typedef struct HashTableNode {
   int value;
   struct HashTableNode *next;
 } HashTableNode;
-
 
 typedef struct HashTable {
   int total_capacity;
@@ -19,9 +17,10 @@ typedef struct HashTable {
   int (*hash)(int, int);
 } HashTable;
 
-HashTable* create(int (*hash_f)(int, int), int total_capacity) {
-  HashTable *t = (HashTable *) malloc(sizeof(HashTable));
-  t->elements = (HashTableNode **) malloc(sizeof(HashTableNode *) * total_capacity);
+HashTable *create(int (*hash_f)(int, int), int total_capacity) {
+  HashTable *t = (HashTable *)malloc(sizeof(HashTable));
+  t->elements =
+      (HashTableNode **)malloc(sizeof(HashTableNode *) * total_capacity);
 
   t->hash = hash_f;
   t->total_capacity = total_capacity;
@@ -30,19 +29,16 @@ HashTable* create(int (*hash_f)(int, int), int total_capacity) {
   return t;
 }
 
-
 HashTableNode *create_node(int element) {
-  HashTableNode *node = (HashTableNode *) malloc(sizeof(HashTableNode));
+  HashTableNode *node = (HashTableNode *)malloc(sizeof(HashTableNode));
   node->value = element;
   node->next = NULL;
 
   return node;
 }
 
-
-
-HashTableNode* add(int element, HashTable *table) {
-  if(table->total_capacity == table->current_capacity) {
+HashTableNode *add(int element, HashTable *table) {
+  if (table->total_capacity == table->current_capacity) {
     perror("HashTable is full. Cannot add more elements");
     return NULL;
   }
@@ -51,10 +47,10 @@ HashTableNode* add(int element, HashTable *table) {
 
   int exists = table->elements[idx] != 0;
   HashTableNode *node = create_node(element);
-  if(exists) {
+  if (exists) {
     HashTableNode *current = table->elements[idx];
 
-    while(current->next != NULL) {
+    while (current->next != NULL) {
       current = current->next;
     }
     current->next = node;
@@ -70,21 +66,19 @@ HashTableNode* add(int element, HashTable *table) {
 
 int hash(int key, int total_capacity) {
   // TODO: impl better hashing
-  return key % total_capacity; 
+  return key % total_capacity;
 }
 
-
 void cleanup(HashTable *table) {
-  for(int i = 0; i < table->total_capacity; i++) {
+  for (int i = 0; i < table->total_capacity; i++) {
     HashTableNode *current = table->elements[i];
-    while(current != NULL) {
+    while (current != NULL) {
       HashTableNode *temp = current;
       current = current->next;
       free(temp);
     }
   }
 }
-
 
 int main() {
   HashTable *table = create(hash, 100);
@@ -94,7 +88,7 @@ int main() {
   add(110, table);
   add(120, table);
 
-  for(int i = 0; i < table->total_capacity; i++) {
+  for (int i = 0; i < table->total_capacity; i++) {
     printf("In index %d:\t", i);
     HashTableNode *curr = table->elements[i];
     while (curr != NULL) {
@@ -108,5 +102,3 @@ int main() {
 
   return 0;
 }
-
-
