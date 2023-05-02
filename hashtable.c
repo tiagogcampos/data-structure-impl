@@ -69,7 +69,7 @@ int hash(int key, int total_capacity) {
 }
 
 
-void remove_table(HashTable *table) {
+void cleanup(HashTable *table) {
   for(int i = 0; i < table->total_capacity; i++) {
     HashTableNode *current = table->elements[i];
     while(current != NULL) {
@@ -99,7 +99,7 @@ int main() {
     printf("\n");
   }
 
-  remove_table(table);
+  cleanup(table);
 
   return 0;
 }
