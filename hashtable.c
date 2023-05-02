@@ -41,7 +41,12 @@ HashTableNode *create_node(int element) {
 
 
 
-int add(int element, HashTable *table) {
+HashTableNode* add(int element, HashTable *table) {
+  if(table->total_capacity == table->current_capacity) {
+    perror("HashTable is full. Cannot add more elements");
+    return NULL;
+  }
+
   int idx = table->hash(element, table->total_capacity);
 
   int exists = table->elements[idx] != 0;
@@ -60,7 +65,7 @@ int add(int element, HashTable *table) {
 
   table->current_capacity++;
 
-  return node->value;
+  return node;
 }
 
 int hash(int key, int total_capacity) {
